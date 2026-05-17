@@ -7,7 +7,7 @@ Stack-agnostic. Two always-on rules form the operating spine; the rest are loade
 ## Quick start
 
 ```bash
-git clone https://github.com/<you>/cursor-composer-rules.git
+git clone https://github.com/madebyaris/cursor-composer-rules.git
 cp -r cursor-composer-rules/.cursor your-project/.cursor
 ```
 
