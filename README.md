@@ -6,9 +6,13 @@ Stack-agnostic. Two always-on rules form the operating spine; the rest are loade
 
 ## Quick start
 
+Repository: **`madebyaris/cursor-composer-rules`** — clone URL:
+
 ```bash
 git clone https://github.com/madebyaris/cursor-composer-rules.git
-cp -r cursor-composer-rules/.cursor your-project/.cursor
+
+# Replace the destination with your actual app directory
+cp -r cursor-composer-rules/.cursor path/to/your-app/.cursor
 ```
 
 If your project already has `.cursor/rules`, merge thoughtfully — duplicate or contradictory always-on prompts hurt quality.
