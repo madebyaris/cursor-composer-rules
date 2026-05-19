@@ -12,6 +12,8 @@ description: >-
 
 Companion to `.cursor/rules/composer-deep-research.mdc`; load this when retrieval depth exceeds quick-rule ergonomics (more than a few independent sources, contradictory docs, benchmarking, compliance or security narratives).
 
+For wide **codebase** surveys, pair this skill's claim ledger with the built-in Explore subagent or [composer-orchestration](.cursor/rules/composer-orchestration.mdc) — keep raw search noise out of the parent thread.
+
 See [reference.md](reference.md) for compact repeatable checklists.
 
 ## Operating stance

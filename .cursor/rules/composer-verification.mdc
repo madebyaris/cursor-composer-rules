@@ -45,6 +45,14 @@ Match proof depth to blast radius. Don't run a full E2E suite for a typo fix; do
 
 When a recommendation depends on an external fact (framework version, API behavior, CVE, benchmark, vendor SLA), name a primary source. Prefer official docs, specs, repo changelogs, or first-party advisories. Flag pages that look stale.
 
+## Independent verification
+
+For high-blast-radius work or when the user asks to mark something done:
+
+- Prefer a **verifier** subagent (`.cursor/agents/verifier.md`) or re-run checks yourself in the parent before **verified**.
+- A subagent's "complete" summary is a **hypothesis** until evidence is named (command output, test pass, screenshot).
+- Cloud or background execution does not change the contract — same labels, same proof depth.
+
 ## Honesty beats velocity
 
 A cleanly labeled `implemented but unverified` with the next unblocker is more valuable than a confident `verified` that turns out to be wrong. Surprises downstream cost the user more than an honest hand-off.

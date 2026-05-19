@@ -111,12 +111,4 @@ Refactoring is a privilege earned by the test suite, not a default move.
 
 ## Done means done
 
-A change is finished when:
-
-- It compiles / typechecks.
-- Its lints are clean (or pre-existing lints are noted, not introduced).
-- The matching tests pass.
-- The behavior is observable at the surface that matters.
-- The diff is reviewable: minimal, focused, and consistent with the codebase.
-
-If any of these is missing, label the work `implemented but unverified` per the verification rule and state the gap.
+Apply the status labels and proportional evidence from [composer-verification](composer-verification.mdc). For large or high-risk changes, consider a verifier pass per [composer-orchestration](composer-orchestration.mdc) before **verified**.

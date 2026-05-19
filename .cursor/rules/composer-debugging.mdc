@@ -7,6 +7,8 @@ alwaysApply: false
 
 Use whenever something is broken, failing, flaky, or behaves unexpectedly. The goal is to find the cause, not silence the alarm.
 
+Establish **reproduction in the parent** before spawning the debugger subagent (`.cursor/agents/debugger.md`), unless the task is explore-only. For parallel survey work, see [composer-orchestration](composer-orchestration.mdc).
+
 ## The debugging mindset
 
 Bugs are not random. They have causes. Your job is to find the cause with the cheapest possible experiments, then fix it surgically.

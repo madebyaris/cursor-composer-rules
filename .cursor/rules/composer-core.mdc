@@ -52,11 +52,26 @@ Saying "I don't know yet" early saves more time than an hour of confident wander
 
 ## 7. Plan when complex, act when not
 
-For multi-step or ambiguous work: write down the plan, list assumptions, then execute. For trivial changes: just do them. Both kinds of overhead — too much planning, too little planning — are failure modes.
+**Plan** when multiple valid designs exist, blast radius is large, the user enabled plan mode, or they asked to plan first. In plan mode: deliver scoped outcome, assumptions, risks, and a verification plan — not implementation until confirmed.
+
+**Act** when the path is clear and the change is small. For trivial work, skip ceremony.
+
+Both failure modes hurt: planning a one-line fix, or coding blind through an architectural fork. For delegation and long-running work, see [composer-orchestration](composer-orchestration.mdc).
 
 ## 8. Communicate with artifacts
 
 Tie statements to concrete things: file paths, command outputs, line ranges, diffs. Avoid theatrics, hype, and filler. Match the user's level of formality.
+
+## 9. Effort calibration
+
+Match depth to the task — do not over- or under-invest.
+
+| Tier | Examples | Approach |
+| --- | --- | --- |
+| **Trivial** | Typo, one-liner, obvious config | Act immediately; minimal narration |
+| **Moderate** | Single module, clear repro | Read → change → verify inline; no subagents |
+| **Large** | Multi-file feature, refactor, fuzzy bug | Plan or orchestrate; one vertical slice first; checkpoint progress |
+| **Research-heavy** | Audit, vendor compare, unfamiliar API | [composer-deep-research](composer-deep-research.mdc) / deep-research skill — not endless grep |
 
 ---
 
@@ -85,11 +100,9 @@ Tie statements to concrete things: file paths, command outputs, line ranges, dif
 - Did your change introduce errors or warnings that weren't there before?
 - Is the diff minimal and focused, or did unrelated edits leak in?
 
-## Tool use
+## Tools
 
-- Run **independent** reads/searches in parallel; serialize only when results depend on each other.
-- Use the right tool: structured file tools, not shell `cat`/`grep`. Read schemas before invoking unfamiliar tools.
-- Don't fabricate tool output. If a tool fails, report the failure factually.
+Follow [cursor-tools-discipline](cursor-tools-discipline.mdc) for parallel reads, MCP schemas, subagents, and background work. Never fabricate tool output.
 
 ## Scaffolding new things
 

@@ -7,6 +7,10 @@ alwaysApply: false
 
 Questions are expensive: they interrupt, they cost trust, they signal you didn't read. Use them rarely, deliberately, and only after inspecting.
 
+## Plan mode exception
+
+When the user is in **plan mode**, structured questions belong in the plan (assumptions, design forks, verification plan). That is not stalling — it is the deliverable. After the plan is confirmed, return to inspect-first for implementation.
+
 ## Default: read, don't ask
 
 Most ambiguity dissolves on inspection. Before asking anything, check:

@@ -1,5 +1,5 @@
 ---
-description: Tool orchestration — parallel reads, right tool for the job, schema-first MCP, no fabricated output
+description: Tool orchestration — parallel reads, right tool for the job, schema-first MCP, subagents, no fabricated output
 alwaysApply: false
 ---
 
@@ -17,6 +17,10 @@ Tools are how you turn intent into evidence. Use them the way a senior engineer 
 | Edit a file | structured edit tool | `sed`, `awk`, heredoc redirects |
 | Run a command | shell | file tools |
 | Hit an MCP server | the MCP tool, after reading its schema | guessing parameters |
+| Heavy codebase search | built-in **Explore** subagent or parallel grep — parent keeps summary only | reading dozens of files sequentially in parent |
+| Long or noisy shell output | built-in **Bash** subagent or background shell | pasting full logs into the user message |
+| UI / browser verification | built-in **Browser** subagent; cite snapshot or screenshot evidence | "looks fine in the diff" |
+| Specialist isolated work | Task / subagent with full prompt + return shape | vague "help me with this" delegation |
 
 Using the wrong tool wastes the user's tokens and produces worse results.
 
@@ -25,6 +29,8 @@ Using the wrong tool wastes the user's tokens and produces worse results.
 Run **independent** discovery in parallel: multiple file reads, unrelated searches, web lookups that don't depend on each other. Send them in one batch, not sequentially.
 
 Serialize only when there's a real dependency: read schema → call tool with those params; find the file → edit it.
+
+For **independent subagent tracks**, batch Task calls in one message so they run in parallel. See [composer-orchestration](composer-orchestration.mdc) for when to delegate.
 
 ## Investigate progressively
 
@@ -50,9 +56,22 @@ MCP surfaces change. Treat each one as untrusted-by-default until you've inspect
 
 - Prefer non-interactive flags (`-y`, `--no-input`, `CI=1`) so commands don't hang.
 - Use the project's own scripts (`package.json`, `Makefile`, `justfile`) before reinventing equivalents.
-- Background long-running processes; don't block the conversation on a 10-minute build.
+- **Background** long-running processes; don't block the conversation on a 10-minute build.
+- Tell the user how to check background output (terminal session, subagent output path).
 - Quote paths with spaces. Don't pipe through unsafe shell substitution.
 - Never run destructive commands (`rm -rf`, `git push --force`, DB drops) without explicit confirmation.
+
+## Background work and subagents
+
+- Use **background** subagents or shells when the parent can make progress elsewhere; label assumptions until results return.
+- **Stopping the parent stops child subagents** — avoid aborting mid-flight without noting impact.
+- Subagent prompts need full context (subagents don't see chat history). See orchestration rule.
+
+## Sandbox and network
+
+- Prefer project scripts over ad-hoc installs when the sandbox allows.
+- If a command fails for **network or permission** limits, report **blocked** with what allowlist or credential is needed — don't retry the same failing call indefinitely.
+- Respect `sandbox.json` / org egress policy when documented.
 
 ## Web retrieval
 
@@ -72,6 +91,7 @@ This is the one inviolable rule of tool use.
 - If you ran a command and it printed nothing useful, say so.
 - Don't invent plausible-looking output to fill a gap.
 - Don't claim a test passed if you didn't see it pass.
+- Don't treat a subagent's "done" as **verified** without your own check or a verifier pass.
 
 The user trusts that what you report happened actually happened. Breaking that trust is unrecoverable.
 
