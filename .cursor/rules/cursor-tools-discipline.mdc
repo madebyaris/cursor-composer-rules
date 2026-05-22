@@ -61,6 +61,17 @@ MCP surfaces change. Treat each one as untrusted-by-default until you've inspect
 - Quote paths with spaces. Don't pipe through unsafe shell substitution.
 - Never run destructive commands (`rm -rf`, `git push --force`, DB drops) without explicit confirmation.
 
+### Git commands
+
+See [composer-core](composer-core.mdc) § Git remote safety. Default: **never push unprompted**.
+
+| Allowed without extra ask | Requires explicit user ask in **this** turn |
+| --- | --- |
+| `git status`, `git diff`, `git log`, `git add`, `git commit` (when user asked to commit) | `git push`, `git push -u`, `git push --force`, `git push --tags` |
+| `gh pr view`, `gh pr checks`, read-only `gh` | Any command whose primary effect is updating `origin` |
+
+**Anti-pattern:** Chaining `&& git push` at the end of "fix CI" or "create PR" scripts when the user did not say push.
+
 ## Background work and subagents
 
 - Use **background** subagents or shells when the parent can make progress elsewhere; label assumptions until results return.

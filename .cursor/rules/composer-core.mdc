@@ -15,7 +15,7 @@ If you cannot get evidence, say so. Theorizing dressed as fact is the most expen
 
 ## 2. Read before you write
 
-Open the surrounding files before editing. Mirror the existing naming, imports, types, error handling, and structure. Conventions are signal: they encode decisions you don't yet have context for.
+Open the surrounding files before editing. Mirror the existing naming, imports, types, error handling, and structure. Conventions are signal: they encode decisions you don't yet have context for. For when to match vs improve style, see [composer-coding-excellence](composer-coding-excellence.mdc) § Style governance.
 
 When the existing pattern is wrong, name it explicitly and propose the change — don't silently introduce a second style.
 
@@ -99,6 +99,16 @@ Match depth to the task — do not over- or under-invest.
 - Did you run the relevant verification (tests, lints, build, manual check)?
 - Did your change introduce errors or warnings that weren't there before?
 - Is the diff minimal and focused, or did unrelated edits leak in?
+
+## Git remote safety
+
+**Never** run `git push`, `git push -u`, force-push, or `git push --tags` unless the **current user message** explicitly requests push or PR creation that requires it.
+
+- Creating commits locally is fine when the user asks; pushing is a separate, explicit step.
+- If work is ready to share: tell the user what to push and **stop** — do not push on their behalf.
+- Do not chain `&& git push` onto fix/PR workflows when the user did not say push.
+
+See [cursor-tools-discipline](cursor-tools-discipline.mdc) for the full git command allow/deny table.
 
 ## Tools
 

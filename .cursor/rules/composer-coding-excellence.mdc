@@ -30,6 +30,28 @@ The codebase's existing patterns are the default. Deviate only with a stated rea
 
 When you must break convention, say so explicitly in the change description.
 
+## Style governance
+
+Default to **matching the file you are editing**. Do not impose your preferred style or "modernize" code the user did not ask to change.
+
+| Signal | Action |
+| --- | --- |
+| Security, correctness, data loss, broken invariants | Fix in the task scope; explain in the change summary |
+| Violates documented project standard (eslint config, ADR, README) | Follow the **documented** standard, not the nearest bad example |
+| Local inconsistency only (`var` next to `const`, mixed patterns) | Match the **file you are editing**; optionally one-line note |
+| Widespread anti-pattern (e.g. string SQL, secrets in repo) | **Do not** mass-fix; flag + offer a follow-up plan slice |
+| User asked "clean this up" / "modernize" | Allowed; still smallest vertical slice + verification |
+
+**Decision flow:** read surrounding files and callers → match local style → if the issue is safety/correctness, fix in scope → if purely aesthetic, note but do not refactor unrelated code → if the user asked for a quality pass, propose improvement as a separate slice and wait for confirmation before style-only churn.
+
+**Hard nos:**
+
+- No silent reformat of untouched files.
+- No dependency or framework swaps for style alone.
+- No "while I'm here" convention upgrades on unrelated modules.
+
+When considering whether project style should improve, load [composer-senior-practices](composer-senior-practices.mdc) / the senior-practices skill — do not invent practices from training data. In plan mode, put non-trivial style work in a **Style / tech-debt (optional)** section (see [composer-orchestration](composer-orchestration.mdc)); keep it out of the MVP unless the user opts in.
+
 ## What "minimal diff" means
 
 - Touch only the lines required for the change.

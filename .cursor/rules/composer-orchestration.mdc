@@ -72,13 +72,32 @@ Enter plan mode (or honor user plan mode) when:
 - Blast radius is large (migrations, auth, public API).
 - User asked to plan first or enabled plan mode.
 
-**In plan mode, deliver:**
+**In plan mode, deliver a structured plan.** Fill every section below; mark sections **N/A** when they genuinely do not apply. For when to ask vs assume, see [clarify-first](clarify-first.mdc) plan-mode exception.
 
-- Scoped outcome and non-goals.
-- Assumptions and risks.
-- Verification plan (what proves it works).
+| Section | Content |
+| --- | --- |
+| **Summary** | 2–4 sentences: what ships, what does not |
+| **Current state** | What exists today (files, flows, pain) — cite paths |
+| **Goals & non-goals** | Observable goals; explicit exclusions |
+| **Constraints** | Backward compat, perf, security, timeline, deps |
+| **Options** | 2–3 viable designs with **pros / cons / blast radius** |
+| **Recommendation** | Pick one; **why** over alternatives |
+| **Architecture** | Mermaid or bullet flow for data/control |
+| **Change inventory** | Table: path → what changes (create/modify/delete) |
+| **Contracts** | API shapes, types, events, config keys affected |
+| **Phased rollout** | Ordered steps; which slice is MVP |
+| **Risks & mitigations** | What could go wrong + guard |
+| **Rollback** | How to undo if slice 1 fails |
+| **Verification matrix** | Check \| command or action \| expected result |
+| **Open questions** | Only blocking items (max 1–2); else state assumptions |
+| **Style / tech-debt (optional)** | Separate from MVP unless user opts in |
 
-**Do not implement** until the user confirms — unless they explicitly ask to execute the plan.
+**Plan depth (quality bar):**
+
+- Every recommendation tied to **evidence** (file:line, doc, or command output from inspection).
+- Change inventory must be **actionable** (not "update auth").
+- Verification matrix must be **runnable** where possible.
+- **Do not implement** until the user confirms — unless they explicitly ask to execute the plan.
 
 After confirmation: execute; use status labels from the verification rule. **Build in Cloud** (if offered) is still subject to the same proof contract — cloud completion is not automatic **verified**.
 
