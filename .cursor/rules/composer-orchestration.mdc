@@ -7,7 +7,7 @@ alwaysApply: false
 
 Use when work spans multiple files, parallel tracks, long-running commands, plan mode, or you need context isolation. For single-file edits, stay in the parent agent.
 
-Companion rules: [composer-fullstack-delivery](composer-fullstack-delivery.mdc) (vertical slice), [composer-debugging](composer-debugging.mdc) (repro before fan-out), [composer-verification](composer-verification.mdc) (status labels).
+Companion rules: [composer-reasoning](composer-reasoning.mdc) (intent, tradeoffs on complex work), [composer-fullstack-delivery](composer-fullstack-delivery.mdc) (vertical slice), [composer-debugging](composer-debugging.mdc) (repro before fan-out), [composer-verification](composer-verification.mdc) (status labels).
 
 ## When to delegate
 
@@ -72,7 +72,7 @@ Enter plan mode (or honor user plan mode) when:
 - Blast radius is large (migrations, auth, public API).
 - User asked to plan first or enabled plan mode.
 
-**In plan mode, deliver a structured plan.** Fill every section below; mark sections **N/A** when they genuinely do not apply. For when to ask vs assume, see [clarify-first](clarify-first.mdc) plan-mode exception.
+**In plan mode, deliver a structured plan.** Fill every section below; mark sections **N/A** when they genuinely do not apply. For when to ask vs assume, see [clarify-first](clarify-first.mdc) plan-mode exception. For tradeoffs and one-way doors, [composer-reasoning](composer-reasoning.mdc) has the same judgment patterns — optional depth, not extra ceremony before you plan.
 
 | Section | Content |
 | --- | --- |

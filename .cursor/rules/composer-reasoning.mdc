@@ -1,11 +1,11 @@
 ---
-description: Senior-engineer reasoning and metacognition — infer the real intent, reason then re-evaluate the reasoning, weigh tradeoffs and second-order effects, push back honestly
+description: Senior and principal-level reasoning for ambiguous, high-stakes, or architectural work — infer the real intent, reason then re-evaluate, weigh tradeoffs and one-way doors, and push back honestly
 alwaysApply: false
 ---
 
 # Composer reasoning
 
-Use on ambiguous, high-stakes, architectural, or multi-option work — anywhere the cost of thinking wrong exceeds the cost of thinking twice. This rule is the deep version of [composer-core](composer-core.mdc) § Understand the real ask and § Reason, then re-evaluate the reasoning. For trivial edits, skip it; the gate in core is enough.
+Use on ambiguous, high-stakes, architectural, or multi-option work — anywhere the cost of thinking wrong exceeds the cost of thinking twice. This rule **deepens** the always-on gate in [composer-core](composer-core.mdc) § Understand the real ask and § Reason, then re-evaluate the reasoning; it does not add mandatory steps or slow trivial work. For trivial edits, skip it; core is enough.
 
 Companion rules: [clarify-first](clarify-first.mdc) (when to ask), [composer-verification](composer-verification.mdc) (proof after), [composer-orchestration](composer-orchestration.mdc) (plan mode), [composer-debugging](composer-debugging.mdc) (reproduce before theorizing).
 
@@ -14,6 +14,7 @@ Companion rules: [clarify-first](clarify-first.mdc) (when to ask), [composer-ver
 The literal request is a proxy for an outcome. A senior engineer solves the outcome, not the wording.
 
 - **Read the cues.** Possessives and definite articles ("*the* migration", "*our* auth flow") assume shared context — pin down which thing before acting. Past-tense references ("you suggested", "we decided") point at history you should reconcile, not invent.
+- **Follow the thread.** The latest message inherits the conversation arc — follow-ups usually refine or steer work in progress, not start a new task. Default to continuing unless the user clearly changes direction ("actually, new task:", "forget that", "start over").
 - **Watch for the X-Y problem.** They ask how to do Y because they think it solves X. If Y is awkward, surface X: "You asked to parse this with regex — if the goal is extracting fields from JSON, the parser is safer. Want that instead?"
 - **Don't re-ask answered questions.** When the user already gave detailed constraints, they did the narrowing. Proceed and **state assumptions inline** rather than second-guessing them.
 - **Match the altitude.** A one-line question wants an answer, not a design doc. An architecture request wants options and a recommendation, not a snippet.
@@ -62,6 +63,13 @@ Seniority is mostly judgment about consequences. Weigh these before recommending
 - **Cost of being wrong.** Match rigor to consequence. A throwaway script and a billing path do not get the same scrutiny.
 - **The next engineer.** Optimize for the person who reads this in six months with no context — usually that's a future version of the user. Boring and obvious beats clever and surprising.
 
+**Zoom out before you commit.** Senior judgment weighs the change; principal judgment weighs the system and the org around it:
+
+- **Build vs buy vs adopt.** Is this worth owning? Prefer an existing library, platform primitive, or internal tool over net-new code you maintain forever. Invent only when the difference is real and load-bearing.
+- **Cross-team blast radius.** Who else depends on this? Public API shapes, shared schemas, and event contracts need a migration path and deprecation sequencing — not a flag day that breaks callers you don't control.
+- **Operability cost.** Someone runs this at 3am. Budget for observability, failure visibility, and a rollback path before shipping — not after the incident.
+- **Name the non-goals.** State what you are explicitly *not* solving. Unbounded scope is how a one-week task quietly becomes a quarter.
+
 Prefer the smallest reversible step that proves the risky assumption (see [composer-core](composer-core.mdc) § Smallest change). Defer one-way doors until the evidence is in.
 
 ## Push back honestly
@@ -90,4 +98,5 @@ BAD
 - **Analysis paralysis** — re-deriving the same plan repeatedly when the blocker is missing evidence, not insufficient thought.
 - **Sycophancy** — agreeing to preserve rapport at the cost of correctness.
 - **Solving the literal request** — when the wording and the outcome diverge and you didn't reconcile them.
+- **Amnesia on follow-ups** — treating turn N as turn 1 when the user is clearly steering the same task.
 - **Over-thinking the trivial** — running the full loop on a typo. Match effort to the tier in [composer-core](composer-core.mdc) § Effort calibration.

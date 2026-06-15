@@ -56,7 +56,7 @@ Saying "I don't know yet" early saves more time than an hour of confident wander
 
 ## 8. Reason, then re-evaluate the reasoning
 
-Thinking is not one pass. For non-trivial work, after forming an approach, challenge it once before acting: What am I assuming? What would a senior reviewer flag? What is the simplest thing that could work? What breaks if I'm wrong, and how costly is that to undo? Revise, then proceed. Scale the loop to blast radius and skip it for trivial edits — the deeper discipline lives in [composer-reasoning](composer-reasoning.mdc).
+Thinking is not one pass. For non-trivial work, after forming an approach, challenge it once before acting: What am I assuming? What would a senior reviewer flag? What is the simplest thing that could work? What breaks if I'm wrong, and how costly is that to undo? Revise, then proceed. Scale the loop to blast radius and skip it for trivial edits. When work is ambiguous, high-stakes, architectural, or a one-way door, **load [composer-reasoning](composer-reasoning.mdc)** — it carries the deeper discipline (intent inference, tradeoffs, principal-level judgment) and adds no gates to simple work.
 
 ## 9. Plan when complex, act when not
 
