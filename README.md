@@ -26,6 +26,7 @@ Evidence over assumption · surgical edits · honest uncertainty · root-cause d
 | | Principle | What you get |
 | --- | --- | --- |
 | 🔍 | **Evidence first** | Read code, run commands, cite paths — never guess |
+| 🤔 | **Reason, then re-check** | Infer the real ask; challenge the plan before acting; push back honestly |
 | ✂️ | **Surgical edits** | Match project style; smallest diff that proves the next step |
 | 📋 | **Rich plans** | Structured plan template with options, inventory, verification matrix |
 | 🛡️ | **Git safety** | Never `git push` unprompted — commits ≠ remote updates |
@@ -37,8 +38,9 @@ Stack-agnostic. **Two always-on rules** form the operating spine; everything els
 ```text
 ┌─────────────────────────────────────────────────────────────┐
 │  ALWAYS ON          │  REQUESTABLE ON TASK                  │
-│  composer-core      │  orchestration · coding · debugging   │
-│  composer-verify    │  research · delivery · tools · clarify│
+│  composer-core      │  reasoning · orchestration · coding   │
+│  composer-verify    │  debugging · research · delivery      │
+│                     │  tools · clarify                      │
 ├─────────────────────┼───────────────────────────────────────┤
 │  AGENTS             │  SKILLS                               │
 │  verifier · debugger│  deep-research · senior-practices     │
@@ -70,8 +72,9 @@ cp -r cursor-composer-rules/.cursor path/to/your-app/.cursor
 
 | Addition | Purpose |
 | --- | --- |
+| [`composer-reasoning.mdc`](.cursor/rules/composer-reasoning.mdc) | **Senior reasoning + metacognition** — infer the real ask, reason then re-evaluate, principal judgment (tradeoffs, reversibility), honest pushback |
+| [`composer-core.mdc`](.cursor/rules/composer-core.mdc) | **Intent + re-evaluate** principles; effort calibration tier; sharper plan vs act; **git remote safety** (never push unprompted) |
 | [`composer-orchestration.mdc`](.cursor/rules/composer-orchestration.mdc) | When to delegate vs inline; **structured plan template**; foreground/background subagents; long-running checkpoints |
-| [`composer-core.mdc`](.cursor/rules/composer-core.mdc) | Effort calibration tier; sharper plan vs act; **git remote safety** (never push unprompted) |
 | [`composer-coding-excellence.mdc`](.cursor/rules/composer-coding-excellence.mdc) | **Style governance** — match vs improve decision tree; no drive-by refactors |
 | [`composer-senior-practices.mdc`](.cursor/rules/composer-senior-practices.mdc) | Version-pinned best practices from primary docs + corroborated guidance |
 | [`cursor-tools-discipline.mdc`](.cursor/rules/cursor-tools-discipline.mdc) | Explore/Bash/Browser subagents, background work, sandbox **blocked** handling; **git command allow/deny** |
@@ -96,6 +99,7 @@ Optional: extend the pack with [Cursor Marketplace](https://cursor.com/marketpla
 
 | File | Use for |
 | --- | --- |
+| [`composer-reasoning.mdc`](.cursor/rules/composer-reasoning.mdc) | Ambiguous, high-stakes, or architectural work: infer real intent, reason then re-evaluate, weigh tradeoffs, push back honestly |
 | [`composer-orchestration.mdc`](.cursor/rules/composer-orchestration.mdc) | Subagents, plan mode, parallel workstreams, long-running tasks |
 | [`composer-coding-excellence.mdc`](.cursor/rules/composer-coding-excellence.mdc) | Writing or modifying code: surgical edits, convention matching, style governance, no fabricated APIs |
 | [`composer-senior-practices.mdc`](.cursor/rules/composer-senior-practices.mdc) | Version-pinned framework/coding guidance from primary docs and corroborated sources |
@@ -132,6 +136,7 @@ Invoke explicitly: `/verifier confirm tests pass`, or ask naturally: *"use the d
 | | Principle |
 | --- | --- |
 | 🎯 | **Behavior contracts, not model identity.** Rules don't assert "Composer = X model". Cursor's model lineup changes; the principles are durable. |
+| 🤔 | **Intent + metacognition.** Read for the real outcome, not the literal words; form an approach, then re-evaluate it before acting. Depth scales with blast radius. |
 | 🪶 | **Tiny always-on core.** Always-on prompts cost context forever. Orchestration, tools, and specialists stay requestable or in `.cursor/agents/`. |
 | 🧩 | **One concern per rule.** Orchestration is separate from debugging is separate from research. Activate what the task needs. |
 | 🔧 | **Concrete over abstract.** Rules show good vs bad with examples, not adjectives. |
@@ -167,6 +172,7 @@ Keep extensions short. Don't duplicate core or verification — link to them.
   rules/
     composer-core.mdc                # always on
     composer-verification.mdc        # always on
+    composer-reasoning.mdc           # requestable
     composer-orchestration.mdc       # requestable
     composer-coding-excellence.mdc   # requestable
     composer-senior-practices.mdc    # requestable
