@@ -1,10 +1,10 @@
 <div align="center">
 
-# 🎼 Composer-era Cursor Rules
+# Composer-era Cursor Rules
 
-**How a senior engineer thinks — encoded for Cursor agents.**
+**Build and continue apps — with intent, evidence, and an honest handoff.**
 
-Evidence over assumption · surgical edits · honest uncertainty · root-cause debugging · structured research · sane orchestration
+Continue-by-default · confusion-weight asks · vertical slices · proof labels · no fake "done"
 
 <br />
 
@@ -12,35 +12,35 @@ Evidence over assumption · surgical edits · honest uncertainty · root-cause d
 [![Stack](https://img.shields.io/badge/Stack-agnostic-6366f1?style=for-the-badge)]()
 [![Cursor](https://img.shields.io/badge/Cursor-Rules_&_Skills-0ea5e9?style=for-the-badge)](https://cursor.com)
 [![Composer 2.5](https://img.shields.io/badge/Tuned_for-Composer_2.5-f97316?style=for-the-badge)]()
+[![Grok 4.5](https://img.shields.io/badge/Also_for-Cursor_Grok_4.5-000000?style=for-the-badge)]()
 
 <br />
 
-[Quick start](#-quick-start) · [What's new](#-whats-new-25-refresh) · [Rules](#-what-the-pack-teaches) · [Design](#-design-principles) · [Extend](#-extending)
+[Quick start](#-quick-start) · [What's new](#-whats-new-build--continue-reorient) · [Rules](#-what-the-pack-teaches) · [Design](#-design-principles) · [Extend](#-extending)
 
 </div>
 
 ---
 
-## ✨ At a glance
+## At a glance
 
 | | Principle | What you get |
 | --- | --- | --- |
-| 🔍 | **Evidence first** | Read code, run commands, cite paths — never guess |
-| 🤔 | **Reason, then re-check** | Infer the real ask; challenge the plan before acting; push back honestly |
-| ✂️ | **Surgical edits** | Match project style; smallest diff that proves the next step |
-| 📋 | **Rich plans** | Structured plan template with options, inventory, verification matrix |
-| 🛡️ | **Git safety** | Never `git push` unprompted — commits ≠ remote updates |
-| 🧠 | **Senior practices** | Version-pinned guidance from official docs, not stale training data |
-| ✅ | **Proof contract** | `verified` / `implemented but unverified` / `blocked` — no fake "done" |
+| Continue | **Continue-by-default** | Follow-ups refine open work; prefer existing seams; leave a handoff (done / next / assumptions) |
+| Intent | **Infer-and-act** | Read the outcome, not just the words; state assumptions inline and keep building |
+| Ask | **Confusion-weight gate** | Ask only when high (irreversible, contract-changing, contradictory, no repo signal) |
+| Slice | **Vertical slice** | One path end-to-end before widening |
+| Proof | **Evidence + labels** | `verified` / `implemented but unverified` / `blocked` — no fake "done" |
+| Safety | **Git remote safety** | Never `git push` unprompted — commits ≠ remote updates |
 
-Stack-agnostic. **Two always-on rules** form the operating spine; everything else loads on demand by description match. No model identity claims — Cursor's lineup changes; the principles don't.
+Stack-agnostic. Tuned for **Composer 2.5** and **Cursor Grok 4.5** — same builder spine either way. **Two always-on rules** form that spine; everything else loads on demand. Research and senior-practices stay available as **edge tools**, not co-equal pillars. The principles are durable even as Cursor's lineup changes.
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
 │  ALWAYS ON          │  REQUESTABLE ON TASK                  │
-│  composer-core      │  reasoning · orchestration · coding   │
-│  composer-verify    │  debugging · research · delivery      │
-│                     │  tools · clarify                      │
+│  composer-core      │  clarify · reasoning · delivery       │
+│  composer-verify    │  orchestration · coding · debugging   │
+│                     │  tools · (edge) research · practices  │
 ├─────────────────────┼───────────────────────────────────────┤
 │  AGENTS             │  SKILLS                               │
 │  verifier · debugger│  deep-research · senior-practices     │
@@ -49,7 +49,7 @@ Stack-agnostic. **Two always-on rules** form the operating spine; everything els
 
 ---
 
-## 🚀 Quick start
+## Quick start
 
 Repository: **`madebyaris/cursor-composer-rules`**
 
@@ -60,7 +60,7 @@ git clone https://github.com/madebyaris/cursor-composer-rules.git
 cp -r cursor-composer-rules/.cursor path/to/your-app/.cursor
 ```
 
-> **⚠️ Merge carefully** if you already have `.cursor/rules` or `.cursor/agents`:
+> **Merge carefully** if you already have `.cursor/rules` or `.cursor/agents`:
 >
 > - Duplicate **always-on** rules hurt quality — keep one core + one verification spine.
 > - If you already have a `verifier` subagent, merge prompts or rename to avoid conflicting delegation.
@@ -68,48 +68,44 @@ cp -r cursor-composer-rules/.cursor path/to/your-app/.cursor
 
 ---
 
-## 🆕 What's new (2.5 refresh)
+## What's new (build + continue reorient)
 
-| Addition | Purpose |
+| Change | Purpose |
 | --- | --- |
-| [`composer-reasoning.mdc`](.cursor/rules/composer-reasoning.mdc) | **Senior reasoning + metacognition** — infer the real ask, reason then re-evaluate, principal judgment (tradeoffs, reversibility), honest pushback |
-| [`composer-core.mdc`](.cursor/rules/composer-core.mdc) | **Intent + re-evaluate** principles; effort calibration tier; sharper plan vs act; **git remote safety** (never push unprompted) |
-| [`composer-orchestration.mdc`](.cursor/rules/composer-orchestration.mdc) | When to delegate vs inline; **structured plan template**; foreground/background subagents; long-running checkpoints |
-| [`composer-coding-excellence.mdc`](.cursor/rules/composer-coding-excellence.mdc) | **Style governance** — match vs improve decision tree; no drive-by refactors |
-| [`composer-senior-practices.mdc`](.cursor/rules/composer-senior-practices.mdc) | Version-pinned best practices from primary docs + corroborated guidance |
-| [`cursor-tools-discipline.mdc`](.cursor/rules/cursor-tools-discipline.mdc) | Explore/Bash/Browser subagents, background work, sandbox **blocked** handling; **git command allow/deny** |
-| [`.cursor/skills/senior-practices/`](.cursor/skills/senior-practices/SKILL.md) | Workflow to anchor framework guidance to repo versions and credible sources |
-| [`.cursor/agents/verifier.md`](.cursor/agents/verifier.md) | Skeptical post-work check before **verified** |
-| [`.cursor/agents/debugger.md`](.cursor/agents/debugger.md) | Isolated root-cause pass (repro first in parent) |
+| [`composer-core.mdc`](.cursor/rules/composer-core.mdc) | **Builder spine** — intent modes, confusion-weight ask gate, continue-the-app + handoff, vertical slice; shorter always-on |
+| [`clarify-first.mdc`](.cursor/rules/clarify-first.mdc) | **Infer-and-act** ask policy — ask only on high confusion weight |
+| [`composer-reasoning.mdc`](.cursor/rules/composer-reasoning.mdc) | **Judgment only** — tradeoffs, one-way doors, pushback (basic intent moved to core) |
+| [`composer-fullstack-delivery.mdc`](.cursor/rules/composer-fullstack-delivery.mdc) | **Build/continue playbook** — seams → slice → failure modes → explicit handoff |
+| [`composer-verification.mdc`](.cursor/rules/composer-verification.mdc) | Unchanged proof contract — still the second always-on |
 
-Optional: extend the pack with [Cursor Marketplace](https://cursor.com/marketplace) plugins (skills, MCP, hooks) — not required for the core behavior contract.
+Optional: extend with [Cursor Marketplace](https://cursor.com/marketplace) plugins — not required for the core behavior contract.
 
 ---
 
-## 📚 What the pack teaches
+## What the pack teaches
 
-### 🔒 Always-on (the operating spine)
+### Always-on (the builder spine)
 
 | File | Purpose |
 | --- | --- |
-| [`composer-core.mdc`](.cursor/rules/composer-core.mdc) | Principles: evidence-first, read before edit, smallest diff, effort calibration, plan vs act |
-| [`composer-verification.mdc`](.cursor/rules/composer-verification.mdc) | Proof contract: `verified` / `implemented but unverified` / `blocked`; independent verification |
+| [`composer-core.mdc`](.cursor/rules/composer-core.mdc) | Continue-by-default, intent + modes, confusion weight, evidence, slice, handoff |
+| [`composer-verification.mdc`](.cursor/rules/composer-verification.mdc) | Proof contract: `verified` / `implemented but unverified` / `blocked` |
 
-### 📎 Requestable (loaded by description match)
+### Requestable (loaded by description match)
 
 | File | Use for |
 | --- | --- |
-| [`composer-reasoning.mdc`](.cursor/rules/composer-reasoning.mdc) | Ambiguous, high-stakes, or architectural work: infer real intent, reason then re-evaluate, weigh tradeoffs, push back honestly |
+| [`clarify-first.mdc`](.cursor/rules/clarify-first.mdc) | When and how to ask — high confusion weight only |
+| [`composer-reasoning.mdc`](.cursor/rules/composer-reasoning.mdc) | Architectural / multi-option work: tradeoffs, one-way doors, honest pushback |
+| [`composer-fullstack-delivery.mdc`](.cursor/rules/composer-fullstack-delivery.mdc) | Multi-layer feature build or continue: seams, slice, handoff |
 | [`composer-orchestration.mdc`](.cursor/rules/composer-orchestration.mdc) | Subagents, plan mode, parallel workstreams, long-running tasks |
-| [`composer-coding-excellence.mdc`](.cursor/rules/composer-coding-excellence.mdc) | Writing or modifying code: surgical edits, convention matching, style governance, no fabricated APIs |
-| [`composer-senior-practices.mdc`](.cursor/rules/composer-senior-practices.mdc) | Version-pinned framework/coding guidance from primary docs and corroborated sources |
-| [`composer-debugging.mdc`](.cursor/rules/composer-debugging.mdc) | Broken or unexpected behavior: reproduce, trace, root cause |
-| [`composer-fullstack-delivery.mdc`](.cursor/rules/composer-fullstack-delivery.mdc) | Multi-layer changes: seams, vertical slice, failure modes |
-| [`composer-deep-research.mdc`](.cursor/rules/composer-deep-research.mdc) | Audits, comparisons, benchmarks: primaries, claim ledger, contradictions |
+| [`composer-coding-excellence.mdc`](.cursor/rules/composer-coding-excellence.mdc) | Writing code: surgical edits, convention matching, no fabricated APIs |
+| [`composer-debugging.mdc`](.cursor/rules/composer-debugging.mdc) | Broken behavior: reproduce, trace, root cause |
 | [`cursor-tools-discipline.mdc`](.cursor/rules/cursor-tools-discipline.mdc) | Tools: parallel reads, MCP schemas, subagents, no fabricated output |
-| [`clarify-first.mdc`](.cursor/rules/clarify-first.mdc) | When to ask (after inspect); plan-mode exception |
+| [`composer-senior-practices.mdc`](.cursor/rules/composer-senior-practices.mdc) | **Edge:** version-pinned guidance when the stack is unfamiliar |
+| [`composer-deep-research.mdc`](.cursor/rules/composer-deep-research.mdc) | **Edge:** audits, comparisons, benchmarks — not the default build path |
 
-### 🤖 Example subagents
+### Example subagents
 
 | File | Use for |
 | --- | --- |
@@ -120,7 +116,7 @@ Built-in Explore, Bash, and Browser subagents need no config; orchestration rule
 
 Invoke explicitly: `/verifier confirm tests pass`, or ask naturally: *"use the debugger subagent on this failure."*
 
-### 🛠 Skills (long-form workflows)
+### Skills (long-form workflows)
 
 | Path | Purpose |
 | --- | --- |
@@ -131,22 +127,22 @@ Invoke explicitly: `/verifier confirm tests pass`, or ask naturally: *"use the d
 
 ---
 
-## 🧭 Design principles
+## Design principles
 
 | | Principle |
 | --- | --- |
-| 🎯 | **Behavior contracts, not model identity.** Rules don't assert "Composer = X model". Cursor's model lineup changes; the principles are durable. |
-| 🤔 | **Intent + metacognition.** Read for the real outcome, not the literal words; form an approach, then re-evaluate it before acting. Depth scales with blast radius. |
-| 🪶 | **Tiny always-on core.** Always-on prompts cost context forever. Orchestration, tools, and specialists stay requestable or in `.cursor/agents/`. |
-| 🧩 | **One concern per rule.** Orchestration is separate from debugging is separate from research. Activate what the task needs. |
-| 🔧 | **Concrete over abstract.** Rules show good vs bad with examples, not adjectives. |
-| 🪞 | **Honest tooling.** Never fabricate output; never mark **verified** from a subagent summary alone. |
-| 🚫 | **Git remote safety.** Agents must not `git push` unless the user explicitly asks in the current turn. For hard enforcement, add your own [`beforeShellExecution` hook](https://cursor.com/docs/agent/hooks) — not shipped in this pack. |
-| ⚖️ | **Agents execute, rules govern.** Verifier runs checks; verification rule defines when and how to label results. |
+| Product | **Build and continue.** Agents ship slices and leave handoffs — not greenfield every turn. |
+| Intent | **Infer-and-act with a confusion-weight ask gate.** Low/medium → assume and proceed; high → one decisive question. |
+| Proof | **Evidence before write.** Intent is not a license to invent APIs. Same verification labels as before. |
+| Context | **Tiny always-on core.** Orchestration, judgment, delivery, and research stay requestable. |
+| Focus | **One concern per rule.** Activate what the task needs. |
+| Honesty | **Never fabricate output;** never mark **verified** from a subagent summary alone. |
+| Git | **Never push unprompted.** For hard enforcement, add your own [`beforeShellExecution` hook](https://cursor.com/docs/agent/hooks) — not shipped in this pack. |
+| Roles | **Agents execute, rules govern.** Verifier runs checks; verification rule defines labels. |
 
 ---
 
-## 🔧 Extending
+## Extending
 
 Add stack-specific rules as new `.mdc` files with `globs`:
 
@@ -162,7 +158,7 @@ Keep extensions short. Don't duplicate core or verification — link to them.
 
 ---
 
-## 📁 Layout
+## Layout
 
 ```text
 .cursor/
@@ -170,17 +166,17 @@ Keep extensions short. Don't duplicate core or verification — link to them.
     verifier.md                      # example subagent
     debugger.md                      # example subagent
   rules/
-    composer-core.mdc                # always on
-    composer-verification.mdc        # always on
-    composer-reasoning.mdc           # requestable
+    composer-core.mdc                # always on — builder spine
+    composer-verification.mdc        # always on — proof contract
+    clarify-first.mdc                # requestable — ask policy
+    composer-reasoning.mdc           # requestable — judgment
+    composer-fullstack-delivery.mdc  # requestable — build/continue
     composer-orchestration.mdc       # requestable
     composer-coding-excellence.mdc   # requestable
-    composer-senior-practices.mdc    # requestable
+    composer-senior-practices.mdc    # requestable (edge)
     composer-debugging.mdc           # requestable
-    composer-deep-research.mdc       # requestable
-    composer-fullstack-delivery.mdc  # requestable
+    composer-deep-research.mdc       # requestable (edge)
     cursor-tools-discipline.mdc      # requestable
-    clarify-first.mdc                # requestable
   skills/
     deep-research/
       SKILL.md
@@ -197,12 +193,12 @@ LICENSE
 
 <div align="center">
 
-## 📄 License
+## License
 
 MIT — see [LICENSE](LICENSE)
 
 <br />
 
-**Made for teams who want agents that ship evidence, not vibes.**
+**Made for teams who want agents that ship the next slice — and know when to ask.**
 
 </div>

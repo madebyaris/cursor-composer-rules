@@ -7,7 +7,7 @@ alwaysApply: false
 
 Use when work spans multiple files, parallel tracks, long-running commands, plan mode, or you need context isolation. For single-file edits, stay in the parent agent.
 
-Companion rules: [composer-reasoning](composer-reasoning.mdc) (intent, tradeoffs on complex work), [composer-fullstack-delivery](composer-fullstack-delivery.mdc) (vertical slice), [composer-debugging](composer-debugging.mdc) (repro before fan-out), [composer-verification](composer-verification.mdc) (status labels).
+Companion rules: [composer-core](composer-core.mdc) (intent, confusion weight, handoff), [composer-reasoning](composer-reasoning.mdc) (tradeoffs on complex work), [composer-fullstack-delivery](composer-fullstack-delivery.mdc) (vertical slice + continue handoff), [composer-debugging](composer-debugging.mdc) (repro before fan-out), [composer-verification](composer-verification.mdc) (status labels).
 
 ## When to delegate
 
@@ -72,11 +72,11 @@ Enter plan mode (or honor user plan mode) when:
 - Blast radius is large (migrations, auth, public API).
 - User asked to plan first or enabled plan mode.
 
-**In plan mode, deliver a structured plan.** Fill every section below; mark sections **N/A** when they genuinely do not apply. For when to ask vs assume, see [clarify-first](clarify-first.mdc) plan-mode exception. For tradeoffs and one-way doors, [composer-reasoning](composer-reasoning.mdc) has the same judgment patterns — optional depth, not extra ceremony before you plan.
+**In plan mode, deliver a structured plan.** Fill every section below; mark sections **N/A** when they genuinely do not apply. For when to ask vs assume, see [clarify-first](clarify-first.mdc) plan-mode exception. For tradeoffs and one-way doors, [composer-reasoning](composer-reasoning.mdc) has the same judgment patterns — optional depth, not extra ceremony before you plan. When confusion weight was medium, name the **inferred intent** and **assumptions** in Summary or Open questions so the user can correct them before implementation.
 
 | Section | Content |
 | --- | --- |
-| **Summary** | 2–4 sentences: what ships, what does not |
+| **Summary** | 2–4 sentences: what ships, what does not; inferred intent + assumptions if confusion was medium |
 | **Current state** | What exists today (files, flows, pain) — cite paths |
 | **Goals & non-goals** | Observable goals; explicit exclusions |
 | **Constraints** | Backward compat, perf, security, timeline, deps |
@@ -105,7 +105,7 @@ After confirmation: execute; use status labels from the verification rule. **Bui
 
 For tasks that span many steps:
 
-1. Checkpoint progress in plain language (what's done, what's next).
+1. Checkpoint with a **handoff** (done / next / assumptions) — see [composer-core](composer-core.mdc).
 2. Ship one **vertical slice** before widening (see fullstack delivery rule).
 3. Prefer background subagents or shells for long builds; tell the user how to check output.
 4. Defer polish until the slice is **verified** at the surface that matters.

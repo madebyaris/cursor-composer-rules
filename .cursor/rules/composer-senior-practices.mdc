@@ -1,5 +1,5 @@
 ---
-description: Version-pinned framework and coding best practices from primary docs and corroborated senior guidance — use for unfamiliar stacks, migrations, architecture reviews, or when style improvement needs evidence
+description: Version-pinned framework guidance from primary docs when building on unfamiliar stacks, upgrading, or reviewing architecture — load when evidence beats training data; not required for routine feature work
 alwaysApply: false
 ---
 
