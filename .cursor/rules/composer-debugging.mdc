@@ -13,11 +13,13 @@ Establish **reproduction in the parent** before spawning the debugger subagent (
 
 Bugs are not random. They have causes. Your job is to find the cause with the cheapest possible experiments, then fix it surgically.
 
+**Reproduce before theory.** A plausible hypothesis is not a diagnosis — establish the failing path first, then explain it.
+
 Avoid the three classic anti-patterns:
 
 1. **Symptom-patching**: making the error message disappear without understanding why it appeared.
 2. **Guess-and-check**: changing things at random hoping it works.
-3. **Premature theory**: committing to a hypothesis before evidence supports it.
+3. **Premature theory**: committing to a hypothesis before evidence supports it — especially tempting when a confident explanation arrives early.
 
 ## Step 1 — Reproduce reliably
 

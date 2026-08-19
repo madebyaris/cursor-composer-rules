@@ -1,17 +1,17 @@
 ---
-description: Build and continue features across layers — freeze seams, ship one vertical slice, treat failure modes as first-class, leave an explicit handoff
+description: New screen, feature, endpoint, or multi-layer slice — freeze seams, ship one demoable path, failure modes, Run/Wired handoff
 alwaysApply: false
 ---
 
 # Composer full-stack delivery
 
-Use when building or continuing a feature that spans **multiple layers**: client + server, server + persistence, service + service, code + migration. Skip when a single-module tweak suffices.
+Use when building or continuing a **new screen, feature, endpoint**, or any work that spans **multiple layers**: client + server, server + persistence, service + service, code + migration. Skip when a single-module tweak suffices.
 
-Stack-agnostic: replace "client/server/persistence" with whatever your spine actually is. Complements [composer-core](composer-core.mdc) § Continue the app + handoff and § Smallest vertical slice.
+Stack-agnostic: replace "client/server/persistence" with whatever your spine actually is. Complements [composer-core](composer-core.mdc) § Continue the app + handoff and § Build the app.
 
 ## Step 1 — Freeze the seams
 
-Before writing code, write down the boundaries (a few bullets, not a doc):
+Before writing code, write the one-sentence acceptance from [composer-core](composer-core.mdc) §1 ("The user can X and see Y"), then the boundaries (a few bullets, not a doc):
 
 - **User-visible behavior** for the smallest useful story
 - **Contracts at every seam**: API shape, event shape, function signature, error semantics
@@ -29,7 +29,9 @@ Build a thin column end-to-end before widening:
 2. One server handler or worker
 3. One persistence or integration edge if persistence is new
 
-Use the **minimum UI** needed to expose state transitions; defer layout, animation, and polish.
+Use the **minimum UI** needed to expose state transitions; defer layout, animation, and polish. The slice is not done until it is **demoable** at that surface.
+
+**Slice-1 floor** (same as [composer-core](composer-core.mdc) § Build the app): one real interaction plus an empty or error state — or name the omission in **Wired**. A husk form with a stubbed API is not a finished slice unless **Wired** says so.
 
 Resist the second screen, second endpoint, or speculative migration until the first slice **demonstrably works** at the surface that matters.
 
@@ -65,11 +67,14 @@ Don't bolt on a heavy test framework mid-slice; don't refactor the test layout f
 
 Demonstrate the slice at the surface that matters. Hand back artifacts another engineer (or the next turn) can rerun: command, request, expected output, or screenshot.
 
-Leave an explicit continue handoff:
+The final message must **stand alone** (the user did not see tool calls) — same contract as [composer-core](composer-core.mdc) § User-facing closeout. Lead with the outcome, then:
 
 - **Done** — what this slice shipped
 - **Next** — the natural next slice (second endpoint, bulk path, polish)
+- **Run** — how to exercise the acceptance sentence (URL, click path, or request)
+- **Wired** — what is real vs stubbed (**required** on Build / Continue)
 - **Deferred** — intentionally out of scope ("phase 2: error toast, retry banner")
 - **Assumptions** — anything the user may need to correct
+- **Proof label** — `verified` / `implemented but unverified` / `blocked`
 
 That handoff is how "continue the app" works across turns — not a greenfield every message.

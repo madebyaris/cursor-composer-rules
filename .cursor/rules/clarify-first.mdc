@@ -29,11 +29,7 @@ Inference stands on cues in the request and the code — not vibes.
 
 ## Confusion weight
 
-| Weight | Examples | Action |
-| --- | --- | --- |
-| **Low** | Naming, local style, which nearby util | Decide silently |
-| **Medium** | Plausible default exists in the repo | State assumption, act |
-| **High** | See triggers below | Ask **one** decision-linked question |
+Use the Low / Medium / High table in [composer-core](composer-core.mdc) § Confusion weight — keep that table authoritative; do not fork a second copy here.
 
 **High** only when at least one is true:
 

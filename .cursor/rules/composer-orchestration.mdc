@@ -11,6 +11,8 @@ Companion rules: [composer-core](composer-core.mdc) (intent, confusion weight, h
 
 ## When to delegate
 
+Delegate for **isolation or parallelism**, not because tools exist.
+
 | Situation | Delegate to |
 | --- | --- |
 | Wide codebase search with noisy intermediate output | built-in **Explore** subagent |
@@ -25,6 +27,7 @@ Companion rules: [composer-core](composer-core.mdc) (intent, confusion weight, h
 - Single-file edit, one test run, one MCP call.
 - One-shot tasks ("format imports", "generate changelog") — use a **skill** or do inline.
 - Spawning many subagents for work one agent can finish in a few tool calls.
+- Delegating because the model is tool-capable — prefer parent tools first.
 
 Default: parent does the work unless isolation or parallelism clearly wins.
 
@@ -41,6 +44,13 @@ Subagents start with a **clean context** — they do not see prior chat history.
 Bad: "Look at the auth code."
 Good: "Find where refresh tokens are validated in `src/auth/`; return file:line and the guard that rejects expired tokens."
 
+## Parent owns the user message
+
+- Children return **summaries** to the parent — not a substitute for the user-facing closeout.
+- The **parent restates** findings, verdicts, and next steps in the final message ([composer-core](composer-core.mdc) § User-facing closeout).
+- Do not dump child tool logs into the user message.
+- A child's "done" is a **hypothesis** until the parent names evidence or runs a verifier — never auto-**verified**.
+
 ## Foreground vs background
 
 | Mode | Use when |
@@ -48,7 +58,7 @@ Good: "Find where refresh tokens are validated in `src/auth/`; return file:line 
 | **Foreground** | Next step depends on the result (schema found, test output needed). |
 | **Background** | Long explore, build, or survey; parent can continue other work. |
 
-If you continue while a background subagent runs, **label assumptions** you are making. Reconcile when results arrive. Do not mark work **verified** from a child summary alone — see verification rule.
+If you continue while a background subagent runs, **label assumptions** you are making. Reconcile when results arrive. Cloud or background completion does not change proof depth — same labels as the verification rule.
 
 ## Parallelism
 
@@ -61,7 +71,8 @@ If you continue while a background subagent runs, **label assumptions** you are 
 Subagents may spawn children for large trees (multi-file features, deep refactors). The **parent** still owns the final answer and conflict resolution.
 
 - Children return **summaries**, not full tool logs.
-- **Resume** with agent ID when continuing prior work — do not re-derive context from scratch.
+- **Resume** with agent ID when continuing prior work on the same track — do not re-derive context from scratch with a new spawn.
+- Start a **new** spawn when the goal, constraints, or return shape have changed enough that resume would confuse the child.
 - Stopping the parent stops children; note this before aborting long runs.
 
 ## Plan mode
@@ -105,7 +116,7 @@ After confirmation: execute; use status labels from the verification rule. **Bui
 
 For tasks that span many steps:
 
-1. Checkpoint with a **handoff** (done / next / assumptions) — see [composer-core](composer-core.mdc).
+1. Checkpoint with a **handoff** (done / next / run / wired / assumptions) — see [composer-core](composer-core.mdc).
 2. Ship one **vertical slice** before widening (see fullstack delivery rule).
 3. Prefer background subagents or shells for long builds; tell the user how to check output.
 4. Defer polish until the slice is **verified** at the surface that matters.
@@ -117,6 +128,7 @@ For tasks that span many steps:
 - Marking **verified** because a subagent said "done."
 - Delegating a 2-minute task and paying context startup cost.
 - Dumping child logs into the user message instead of a structured summary.
+- Vacuous polling of background children when the parent is not blocked on them.
 
 ## Skills vs subagents
 

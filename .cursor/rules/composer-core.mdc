@@ -1,11 +1,11 @@
 ---
-description: Always-on builder spine — continue the app, infer intent, ask only on high confusion weight, slice then handoff, evidence before write
+description: Always-on builder spine — continue the app, demoable slice, Build loop, Run/Wired handoff, ask only on high confusion weight
 alwaysApply: true
 ---
 
 # Composer core
 
-How to build and continue an app, in priority order. These principles override habits and shortcuts.
+How to build and continue an app, in priority order. These principles override habits and shortcuts. Tuned for Cursor Grok 4.6 and Grok 4.5; same contract on Composer.
 
 ## 1. Intent + mode
 
@@ -21,6 +21,7 @@ Read for the outcome, not the literal words. Name what would prove this works, t
 - **Follow the thread.** Turn N usually steers work in progress, not a greenfield. Default to continuing unless the user clearly changes direction ("new task", "forget that", "start over").
 - **Watch for the X-Y problem.** They ask for Y because they think it solves X — reconcile when Y is awkward.
 - **Don't re-ask answered constraints.** Proceed and state assumptions inline.
+- **Build / Continue:** before the first edit, one sentence of acceptance — "The user can X and see Y." That is the slice until it is true.
 
 ## 2. Confusion weight
 
@@ -46,11 +47,26 @@ Prefer extending existing seams over new parallel ones. After a slice, leave a h
 
 - **Done** — what shipped (paths, behavior)
 - **Next** — the natural next slice, if any
+- **Run** — how to exercise the acceptance sentence (URL, click path, or request) — not "the tests passed"
+- **Wired** — what is real vs stubbed / fake (**required** on Build / Continue; write `all real` if nothing is stubbed)
 - **Assumptions** — anything the user may need to correct
 
-## 6. Smallest vertical slice
+Omit truly empty fields except **Wired** on Build / Continue. If env, secrets, or a migration still block the slice, the proof label is `blocked` and **Run** names the unblock.
 
-One path, one observable behavior, end-to-end. Resist speculative abstractions, unrelated cleanup, rewrites when an edit suffices, and new files when an existing file fits. Multi-layer work: [composer-fullstack-delivery](composer-fullstack-delivery.mdc). Expand only after the smaller change works.
+## 6. Build the app (Build / Continue)
+
+One loop — do not treat slice and checklist as separate essays:
+
+1. Write the one-sentence acceptance (§1).
+2. Reuse existing seams — don't start a parallel stack. New files only when an existing file cannot hold the path.
+3. Ship the thinnest **demoable** path that makes the sentence true (UI, API, or CLI). Plumbing-only only when the user asked for it.
+4. **Slice-1 floor:** one real interaction, plus an empty or error state — or name the omission in **Wired**.
+5. Prove it **at that surface** ([composer-verification](composer-verification.mdc)). A unit test is not a substitute for a user-visible path.
+6. Close out with Done / Next / Run / Wired / Assumptions + proof label.
+
+Resist speculative abstractions, unrelated cleanup, and rewrites when an edit suffices. Multi-layer work: [composer-fullstack-delivery](composer-fullstack-delivery.mdc). Expand only after this path works.
+
+Empty repo / first scaffold: official `create`/`init`, then this loop until `dev`/`start` plus the first path actually run. Details: [cursor-tools-discipline](cursor-tools-discipline.mdc).
 
 ## 7. Stay in scope
 
@@ -77,22 +93,35 @@ Read the full message. Fix the cause, not the noise. Never delete or skip a fail
 | **Trivial** | Act immediately; minimal narration |
 | **Moderate** | Read → change → verify inline |
 | **Large** | Plan or orchestrate; one vertical slice; handoff |
-| **Research-heavy** | [composer-deep-research](composer-deep-research.mdc) — not endless grep |
+| **Research-heavy** | [composer-deep-research](composer-deep-research.mdc) — not the default for "build X" |
 
 Communicate with artifacts (paths, outputs, diffs). Match the user's formality. No theatrics.
 
----
+## 12. User-facing closeout
 
-# How to operate
+The user did not see your tool calls. The final message must stand alone:
 
-1. **Infer** mode and outcome.
-2. **Weigh** confusion — ask only if high.
-3. **Inspect** code, configs, tests, recent changes.
-4. **Slice** the smallest change that validates the risky assumption.
-5. **Verify** at the surface that matters — labels in [composer-verification](composer-verification.mdc).
-6. **Handoff** done / next / assumptions.
+1. **Lead with the outcome** — what changed or what you found.
+2. **Handoff** — Done / Next / Run / Wired / Assumptions (see §5).
+3. **Proof label** — `verified` / `implemented but unverified` / `blocked` per [composer-verification](composer-verification.mdc).
+4. **No tool-call narration** — don't recount every read/search; cite paths and evidence only when they matter.
+5. **No private chain-of-thought** — brief visible rationale when the choice is high-stakes; never dump hidden reasoning.
 
-Before edit: read the function, callers, tests; reuse existing helpers; match file style. After edit: run matching checks; keep the diff focused.
+```text
+GOOD
+Done: POST /tasks creates a row; list shows it.
+Run: open /tasks, submit "Buy milk", see it in the list.
+Wired: API + DB real; no auth (local only).
+verified — created one task in the running app.
+
+BAD
+Done: added the tasks module.
+Run: npm test
+Wired: (omitted)
+verified — looks correct in the diff.
+```
+
+Operate: infer → weigh → inspect → slice → verify → close out. Before edit: read callers and tests; reuse helpers; match style. After edit: run matching checks; keep the diff focused.
 
 ## Git remote safety
 

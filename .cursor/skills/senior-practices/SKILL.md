@@ -17,7 +17,7 @@ See [reference.md](reference.md) for compact repeatable checklists.
 
 ## Operating stance
 
-Training data is a hypothesis until anchored to **this repo's versions** and **T1 sources**. Prefer falsification: check deprecations, breaking changes, and "do not use" guidance before recommending a pattern.
+Training data is a hypothesis until anchored to **this repo's versions** and **T1 sources**. Prefer falsification: check deprecations, breaking changes, and "do not use" guidance before recommending a pattern. Recollection without a primary source stays **[H]** until inspected.
 
 Do not imitate private chain-of-thought. Make the work **inspectable**: version inventory, source list, reconciled recommendations, and apply-now vs follow-up split.
 

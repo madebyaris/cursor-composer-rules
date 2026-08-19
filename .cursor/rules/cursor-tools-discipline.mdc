@@ -22,7 +22,7 @@ Tools are how you turn intent into evidence. Use them the way a senior engineer 
 | UI / browser verification | built-in **Browser** subagent; cite snapshot or screenshot evidence | "looks fine in the diff" |
 | Specialist isolated work | Task / subagent with full prompt + return shape | vague "help me with this" delegation |
 
-Using the wrong tool wastes the user's tokens and produces worse results.
+Prefer **structured file tools** over shell for read/search/edit. Using the wrong tool wastes the user's tokens and produces worse results.
 
 ## Parallelize independent work
 
@@ -47,10 +47,17 @@ Re-reading the same files repeatedly is a signal you're guessing, not investigat
 
 MCP surfaces change. Treat each one as untrusted-by-default until you've inspected it.
 
-1. **Read the schema** before calling. Parameters, required fields, return shape.
-2. **Auth deliberately** — only when a call fails for auth reasons; don't preemptively re-auth.
-3. **Don't promise capabilities** that aren't in the live schema. Tool names and shapes drift across versions.
-4. **Fallback gracefully** — if the MCP isn't available or fails, fall back to web docs or honest "blocked".
+1. **Inspect the schema** before calling. Parameters, required fields, return shape.
+2. **Call with those params** — never invent argument names or shapes from memory.
+3. **Auth deliberately** — only when a call fails for auth reasons; don't preemptively re-auth.
+4. **Don't promise capabilities** that aren't in the live schema. Tool names and shapes drift across versions.
+5. **Fallback gracefully** — if the MCP isn't available or fails, fall back to official docs or honest **blocked** ([composer-verification](composer-verification.mdc)).
+
+## Browser and UI proof
+
+- Prefer an accessibility/DOM **snapshot** as the structural source of truth for what is on the page.
+- Use a **screenshot** when visual appearance is the claim (layout, styling, empty states).
+- Cite the artifact you inspected. "Looks fine in the diff" is not UI verification.
 
 ## Shell usage
 
@@ -77,6 +84,7 @@ See [composer-core](composer-core.mdc) § Git remote safety. Default: **never pu
 - Use **background** subagents or shells when the parent can make progress elsewhere; label assumptions until results return.
 - **Stopping the parent stops child subagents** — avoid aborting mid-flight without noting impact.
 - Subagent prompts need full context (subagents don't see chat history). See orchestration rule.
+- **Don't vacuously poll** child agents or long jobs — wait for completion signals, or check only when the next step is blocked on that result.
 
 ## Sandbox and network
 

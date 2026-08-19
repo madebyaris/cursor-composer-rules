@@ -41,4 +41,4 @@ Reuse between sessions; copy into notes only when tracking long arcs.
 
 ## Stop rule
 
-Cease retrieving when the last pass only duplicated primary paraphrases or failed to add discriminative facts. Summarise and surface uncertainty instead.
+Cease retrieving when the last pass only duplicated primary paraphrases or failed to add discriminative facts. Summarise and surface uncertainty instead. Training-data familiarity without a T1 cite stays provisional.

@@ -5,7 +5,9 @@ alwaysApply: false
 
 # Composer deep research
 
-When the user asks for investigation, comparisons, unfamiliar domains, audits, benchmarks, regulation-style questions, vendor claims, historical timelines, architecture surveys, threat models grounded in citations, etc., shift into **research mode**.
+When the user asks for investigation, comparisons, unfamiliar domains, audits, benchmarks, regulation-style questions, vendor claims, historical timelines, architecture surveys, threat models grounded in citations, etc., shift into **research mode**. This is an **edge tool**, not the default build path.
+
+Training data and prior familiarity are hypotheses until T1-anchored. Prefer primaries over recollection.
 
 **Expanded playbook**: use the skill at [.cursor/skills/deep-research/SKILL.md](.cursor/skills/deep-research/SKILL.md) for ladders, contradiction logging, and long-form workflows.
 

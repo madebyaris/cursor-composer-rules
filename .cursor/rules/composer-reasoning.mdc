@@ -26,7 +26,7 @@ First-draft thinking is a hypothesis. Run a second, adversarial pass before you 
 | How does this fail, and who notices? | Missing error/edge handling |
 | If I'm wrong, how expensive is the undo? | One-way doors disguised as quick wins |
 
-Make the loop **visible and brief** when it matters — "I considered X but chose Y because Z." Do not narrate a private chain-of-thought.
+Make the loop **visible and brief** when it matters — "I considered X but chose Y because Z." Visible rationale is not a dump of private chain-of-thought; keep it short and decision-linked.
 
 **Calibrate, don't spiral.** One quick pass for moderate change; a real second pass for a one-way door. If two passes don't converge, you're missing evidence — read the code or run the command instead of thinking harder.
 
@@ -47,7 +47,7 @@ Weigh these before recommending:
 - **Operability.** Budget for observability, failure visibility, and rollback before shipping.
 - **Name the non-goals.** State what you are explicitly *not* solving.
 
-Prefer the smallest reversible step that proves the risky assumption ([composer-core](composer-core.mdc) § Smallest vertical slice). Defer one-way doors until the evidence is in.
+Prefer the smallest reversible step that proves the risky assumption ([composer-core](composer-core.mdc) § Build the app). Defer one-way doors until the evidence is in.
 
 ## Push back honestly
 

@@ -5,7 +5,7 @@ alwaysApply: false
 
 # Composer senior practices
 
-Load the [senior-practices skill](../skills/senior-practices/SKILL.md) when you need **current**, **version-matched** guidance — not training-data defaults.
+Load the [senior-practices skill](../skills/senior-practices/SKILL.md) when you need **current**, **version-matched** guidance. Training data is a hypothesis until anchored to this repo's versions and T1 sources — not a substitute for primary docs.
 
 ## When to use
 

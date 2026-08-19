@@ -23,23 +23,27 @@ Use one of these labels anywhere you would otherwise say "done":
 
 Match proof depth to blast radius. Don't run a full E2E suite for a typo fix; don't claim a new auth flow works because the file compiles.
 
+**If the acceptance sentence is user-visible** ("The user can X and see Y"), proof is **that surface** — running app, request, or screenshot. A unit test or compile is extra, not a substitute.
+
 | Change | Minimum evidence |
 | --- | --- |
 | Comment, doc, rename | Visual inspection; lint/typecheck if cheap |
-| Single function tweak | Targeted unit test, or a focused command that exercises the path |
+| Single function tweak (not user-visible) | Targeted unit test, or a focused command that exercises the path |
 | API/contract change | Concrete request/response example or contract test against the new shape |
 | New scaffold or subsystem | Install succeeds, dev/start runs, primary happy path passes, build succeeds |
-| User-visible UI behavior | Screenshot, recorded interaction, or browser-tool verification — not "looks fine in the diff" |
+| User-visible UI / new screen / new feature path | Screenshot, recorded interaction, or browser-tool verification at the acceptance path — not "looks fine in the diff", not `npm test` alone |
 | Data migration | Dry-run output on representative data + rollback plan |
 | Security-sensitive change | At least one negative test (denied path) and a positive test |
 
 ## Things that are not verification
 
 - Re-reading your own diff and feeling confident.
+- A confident **user-facing summary** with no named check — tone is not evidence.
 - "It compiles" for runtime behavior.
 - "The function looks correct" for output correctness.
 - "The docs say so" without trying it.
 - "The previous test still passes" when the new path is what changed.
+- `npm test` / unit tests **alone** when the acceptance sentence is a screen, flow, or user-visible API.
 
 ## External facts need sources
 
@@ -55,4 +59,4 @@ For high-blast-radius work or when the user asks to mark something done:
 
 ## Honesty beats velocity
 
-A cleanly labeled `implemented but unverified` with the next unblocker is more valuable than a confident `verified` that turns out to be wrong. Surprises downstream cost the user more than an honest hand-off.
+A cleanly labeled `implemented but unverified` with the next unblocker is more valuable than a confident `verified` that turns out to be wrong. Surprises downstream cost the user more than an honest hand-off. Any claim in the **user-facing closeout** that would otherwise say "done" must carry one of the three labels above.

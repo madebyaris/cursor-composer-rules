@@ -52,3 +52,5 @@ If repro is missing, state what you need before guessing.
 ```
 
 Do not delete or weaken failing tests. Do not symptom-patch without documenting workarounds. Report **blocked** if repro requires credentials or environment the parent must provide.
+
+Your report is for the **parent**. The parent restates root cause, fix, and proof label to the user. A "fixed" summary here is **not** automatically **verified** until the parent owns the evidence.

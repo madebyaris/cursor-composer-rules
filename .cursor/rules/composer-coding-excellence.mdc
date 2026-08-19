@@ -133,4 +133,4 @@ Refactoring is a privilege earned by the test suite, not a default move.
 
 ## Done means done
 
-Apply the status labels and proportional evidence from [composer-verification](composer-verification.mdc). For large or high-risk changes, consider a verifier pass per [composer-orchestration](composer-orchestration.mdc) before **verified**.
+Apply the status labels and proportional evidence from [composer-verification](composer-verification.mdc). Close out with a standalone Done / Next / Run / Wired / Assumptions + proof label ([composer-core](composer-core.mdc) § User-facing closeout). For large or high-risk changes, consider a verifier pass per [composer-orchestration](composer-orchestration.mdc) before **verified**.

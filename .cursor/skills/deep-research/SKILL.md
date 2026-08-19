@@ -18,9 +18,9 @@ See [reference.md](reference.md) for compact repeatable checklists.
 
 ## Operating stance
 
-Assume initial answers are hypotheses until corroborated. Prioritise falsification (finding counter-evidence or version skew) ahead of reinforcing comfortable narratives.
+Assume initial answers are hypotheses until corroborated — including training-data familiarity. Prioritise falsification (finding counter-evidence or version skew) ahead of reinforcing comfortable narratives.
 
-Do not imitate private chain-of-thought. Make the research **inspectable** through compact artifacts: a plan, a claim ledger, a contradiction log, and a confidence-bearing conclusion.
+Do not imitate private chain-of-thought. Make the research **inspectable** through compact artifacts: a plan, a claim ledger, a contradiction log, and a confidence-bearing conclusion. Close out so the parent can restate a standalone conclusion with confidence tiers.
 
 ## Phase A — Clarify investigative goal
 

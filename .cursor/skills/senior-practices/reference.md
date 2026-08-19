@@ -41,7 +41,7 @@ Reuse between sessions; copy into notes when tracking a longer guidance arc.
 
 ## Stop rule
 
-Stop when T1 answers the decision and repo reconciliation is done. Do not keep searching for confirming blog posts.
+Stop when T1 answers the decision and repo reconciliation is done. Do not keep searching for confirming blog posts. Training data without a T1 cite is not authority.
 
 ## Hand-off capsule (optional)
 
