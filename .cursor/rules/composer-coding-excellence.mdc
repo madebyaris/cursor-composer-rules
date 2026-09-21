@@ -1,11 +1,11 @@
 ---
-description: Coding craft — surgical edits, convention matching, no scope creep, no slop comments, no fabricated APIs
+description: Editing source, tests, types, or build files in any language — surgical diff, match the file's language idioms, run the narrowest check
 alwaysApply: false
 ---
 
 # Composer coding excellence
 
-Use whenever you are writing or modifying code. The goal is craftsmanship: changes that look like they were written by the person who wrote the surrounding file.
+Use whenever you are writing or modifying source, tests, types, or build files. The goal is craftsmanship: changes that look like they were written by the person who wrote the surrounding file, in that file's language.
 
 ## The editing mindset
 
@@ -14,7 +14,7 @@ You are a careful surgeon, not an enthusiastic remodeler.
 1. **Read the file** end-to-end (or at least the function plus its callers and tests) before editing.
 2. **Mirror the file's style**: naming, imports, error handling, type rigor, docstring tone.
 3. **Make the smallest diff** that achieves the goal. Unrelated improvements are a separate task.
-4. **Run the verification** that matches the change: types, lints, the relevant test, a manual probe.
+4. **Run the narrowest check** that can fail ([composer-verification](composer-verification.mdc)). Widen only when the change is cross-cutting or user-visible.
 5. **Re-read your diff** as if reviewing someone else's PR before submitting.
 
 ## Convention matching is not optional
@@ -29,6 +29,15 @@ The codebase's existing patterns are the default. Deviate only with a stated rea
 - If the project has a logger, use it — don't `console.log`.
 
 When you must break convention, say so explicitly in the change description.
+
+## Language of the file
+
+The language already in the file is the dialect. Errors, null, async, ownership, tests, and formatting follow that file and the repo's toolchain.
+
+- Match how this repo returns errors, handles absence, and waits on I/O. Importing an idiom from another language is a second style.
+- Tests use the framework and naming already in the tree. Extend the test that covers this behavior.
+- Format with the repo's formatter. Leave unrelated lines alone.
+- If the idiom is not in the repo, one primary lookup via [composer-senior-practices](composer-senior-practices.mdc), then write it. Do not invent syntax, APIs, or compiler flags.
 
 ## Style governance
 
@@ -133,4 +142,4 @@ Refactoring is a privilege earned by the test suite, not a default move.
 
 ## Done means done
 
-Apply the status labels and proportional evidence from [composer-verification](composer-verification.mdc). Close out with a standalone Done / Next / Run / Wired / Assumptions + proof label ([composer-core](composer-core.mdc) § User-facing closeout). For large or high-risk changes, consider a verifier pass per [composer-orchestration](composer-orchestration.mdc) before **verified**.
+Apply the status labels and proportional evidence from [composer-verification](composer-verification.mdc). Close out per [composer-core](composer-core.mdc) § User-facing closeout: fast path is outcome, command, and label; a product slice adds Done / Next / Run / Wired / Assumptions. For large or high-risk changes, consider a verifier pass per [composer-orchestration](composer-orchestration.mdc) before **verified**.

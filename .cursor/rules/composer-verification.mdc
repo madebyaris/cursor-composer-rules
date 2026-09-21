@@ -23,12 +23,19 @@ Use one of these labels anywhere you would otherwise say "done":
 
 Match proof depth to blast radius. Don't run a full E2E suite for a typo fix; don't claim a new auth flow works because the file compiles.
 
-**If the acceptance sentence is user-visible** ("The user can X and see Y"), proof is **that surface** — running app, request, or screenshot. A unit test or compile is extra, not a substitute.
+**Default for code:** the project's own runner, scoped to the touched behavior. Stop when that check passes.
+
+- Go: `go test ./pkg -run TestName`
+- Python: `pytest path/test_file.py::test_name`
+- Rust: `cargo test test_name`
+- JS/TS: the repo's runner with a path or name (`vitest`, `jest`, `npm test --`)
+
+Use the full suite when the change is cross-cutting. **If the acceptance sentence is user-visible** ("The user can X and see Y"), proof is **that surface** — running app, request, or screenshot. A scoped unit test is extra, not a substitute. Typecheck or compile proves a type-only change; it does not prove runtime behavior.
 
 | Change | Minimum evidence |
 | --- | --- |
 | Comment, doc, rename | Visual inspection; lint/typecheck if cheap |
-| Single function tweak (not user-visible) | Targeted unit test, or a focused command that exercises the path |
+| Local code change (function, bugfix, one module) | Scoped test or command above — the narrowest check that can fail |
 | API/contract change | Concrete request/response example or contract test against the new shape |
 | New scaffold or subsystem | Install succeeds, dev/start runs, primary happy path passes, build succeeds |
 | User-visible UI / new screen / new feature path | Screenshot, recorded interaction, or browser-tool verification at the acceptance path — not "looks fine in the diff", not `npm test` alone |

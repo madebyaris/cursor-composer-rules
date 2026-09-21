@@ -1,11 +1,13 @@
 ---
-description: Root-cause debugging — reproduce, trace data flow, test cheapest hypothesis, fix the cause not the symptom
+description: Failing tests, errors, flaky behavior, or a bug with no clear line — reproduce, trace the data, fix the cause, prove it with one scoped test
 alwaysApply: false
 ---
 
 # Composer debugging
 
 Use whenever something is broken, failing, flaky, or behaves unexpectedly. The goal is to find the cause, not silence the alarm.
+
+A bug with a known repro: reproduce, trace, minimal fix, one scoped test — the fast path in [composer-core](composer-core.mdc) § Two speeds. The six steps below are for an unclear or flaky failure.
 
 Establish **reproduction in the parent** before spawning the debugger subagent (`.cursor/agents/debugger.md`), unless the task is explore-only. For parallel survey work, see [composer-orchestration](composer-orchestration.mdc).
 

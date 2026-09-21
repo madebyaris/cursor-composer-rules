@@ -1,17 +1,19 @@
 ---
-description: New screen, feature, endpoint, or multi-layer slice — freeze seams, ship one demoable path, failure modes, Run/Wired handoff
+description: New screen, feature, endpoint, or multi-layer slice — freeze seams, ship one demoable path, failure modes, Run/Wired handoff. Skip for a single-module code change.
 alwaysApply: false
 ---
 
 # Composer full-stack delivery
 
-Use when building or continuing a **new screen, feature, endpoint**, or any work that spans **multiple layers**: client + server, server + persistence, service + service, code + migration. Skip when a single-module tweak suffices.
+Use when building or continuing a **new screen, feature, endpoint**, or any work that spans **multiple layers**: client + server, server + persistence, service + service, code + migration.
 
-Stack-agnostic: replace "client/server/persistence" with whatever your spine actually is. Complements [composer-core](composer-core.mdc) § Continue the app + handoff and § Build the app.
+A single-module code change uses the fast path in [composer-core](composer-core.mdc) § Two speeds. Skip this rule's slice floor.
+
+Stack-agnostic: replace "client/server/persistence" with whatever your spine actually is. Complements [composer-core](composer-core.mdc) § User-facing closeout and § Build the app.
 
 ## Step 1 — Freeze the seams
 
-Before writing code, write the one-sentence acceptance from [composer-core](composer-core.mdc) §1 ("The user can X and see Y"), then the boundaries (a few bullets, not a doc):
+Before writing code, write the one-sentence acceptance from [composer-core](composer-core.mdc) § Two speeds ("The user can X and see Y"), then the boundaries (a few bullets, not a doc):
 
 - **User-visible behavior** for the smallest useful story
 - **Contracts at every seam**: API shape, event shape, function signature, error semantics

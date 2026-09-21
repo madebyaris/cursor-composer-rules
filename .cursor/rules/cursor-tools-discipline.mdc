@@ -1,125 +1,118 @@
 ---
-description: Tool orchestration — parallel reads, right tool for the job, schema-first MCP, subagents, no fabricated output
+description: Cursor tool harness — what may enter a turn, which tool runs, what may leave, and when to stop. Parallel reads, schema-first MCP, no fabricated output
 alwaysApply: false
 ---
 
-# Cursor tools discipline
+# Cursor tools harness
 
-Tools are how you turn intent into evidence. Use them the way a senior engineer uses a debugger: deliberately, in the right order, and never as a substitute for reading.
+Cursor Agent is instructions, tools, and a model ([agent overview](https://cursor.com/docs/agent/overview)). There is no cap on tool calls. This rule is the cap: what comes in, which tool runs, what goes out, and when the loop stops.
 
-## Pick the right tool
+The always-on loop lives in [composer-core](composer-core.mdc) § Evidence, then edit. This file is the map.
 
-| Job | Right tool | Wrong tool |
+## In
+
+Only these may decide the next action:
+
+- The user message. A follow-up sent while you are working arrives at the **next tool call** and steers from there. Finish the in-flight call, then apply it. A queued message waits until the turn ends.
+- Rules and skills already attached.
+- The **latest** tool result: the file slice, the command output, the schema, the snapshot, the child summary.
+- A child **summary**. Raw child logs stay out of the parent.
+
+These are not inputs:
+
+- A guess standing in for a result you did not run.
+- A full-tree read when a search hit exists.
+- The same file again, unless the last read left a named question.
+- The old text of a file you already edited. Re-read the hunk you changed, not the whole tree.
+- A secret, token, or credential copied out of tool output into source or into the user message.
+
+## Loop
+
+1. **Locate** — file, then symbol, then line. No edit before a location.
+2. **Act once** — one edit or one command. Independent reads go out in one batch.
+3. **Read the result.** That result is the next query.
+4. **Stop.**
+   - The check passed → stop.
+   - The same failure twice (same error text, same command, same snippet) → stop and report. Do not send a third variant.
+   - Network, sandbox, or auth blocked the call → label **blocked** and name the unblock. Do not retry the identical call.
+   - The tool does not exist or the MCP schema has no such parameter → say so. Do not invent the call.
+
+## Pick the tool
+
+Prefer structured file tools over shell for read, search, and edit.
+
+| Job | Tool | Keep out |
 | --- | --- | --- |
-| Read a file | structured file reader | `cat`, `head`, `tail` in shell |
+| Read a file | structured file reader | `cat`, `head`, `tail` |
 | Find files by name | glob | `find`, `ls -R` |
-| Search code by content | ripgrep / grep tool | `grep` in shell, full-file scans |
-| Edit a file | structured edit tool | `sed`, `awk`, heredoc redirects |
+| Search by content | ripgrep / grep tool | shell `grep`, reading the tree |
+| Edit | structured edit | `sed`, `awk`, heredoc redirects |
 | Run a command | shell | file tools |
-| Hit an MCP server | the MCP tool, after reading its schema | guessing parameters |
-| Heavy codebase search | built-in **Explore** subagent or parallel grep — parent keeps summary only | reading dozens of files sequentially in parent |
-| Long or noisy shell output | built-in **Bash** subagent or background shell | pasting full logs into the user message |
-| UI / browser verification | built-in **Browser** subagent; cite snapshot or screenshot evidence | "looks fine in the diff" |
-| Specialist isolated work | Task / subagent with full prompt + return shape | vague "help me with this" delegation |
+| External system | MCP, after the live schema | remembered argument names |
+| Wide codebase search | **Explore** subagent, or parallel grep; parent keeps the summary | dozens of sequential reads in the parent |
+| Long or noisy shell | **Bash** subagent or a background shell | full logs in the user message |
+| UI proof | **Browser** (snapshot, screenshot, console, network) | "looks fine in the diff" |
+| Isolated specialist work | Task with goal, constraints, pointers, done, return shape | "help me with this" |
 
-Prefer **structured file tools** over shell for read/search/edit. Using the wrong tool wastes the user's tokens and produces worse results.
+A single-file edit, one test, or one MCP call stays in the parent. Delegation rules: [composer-orchestration](composer-orchestration.mdc).
 
-## Parallelize independent work
+Built-in Explore, Bash, and Browser exist to keep noisy output out of the parent ([subagents](https://cursor.com/docs/agent/subagents)). Cloud subagents use the team's MCP config, not the local session's servers.
 
-Run **independent** discovery in parallel: multiple file reads, unrelated searches, web lookups that don't depend on each other. Send them in one batch, not sequentially.
+## Out
 
-Serialize only when there's a real dependency: read schema → call tool with those params; find the file → edit it.
+What may leave the turn:
 
-For **independent subagent tracks**, batch Task calls in one message so they run in parallel. See [composer-orchestration](composer-orchestration.mdc) for when to delegate.
+- The edit, through the structured edit tool.
+- The one command that is the check.
+- The user message: outcome, the evidence, the proof label ([composer-core](composer-core.mdc) § User-facing closeout).
 
-## Investigate progressively
+What stays inside:
 
-Don't read megabytes when you need kilobytes. The default order:
+- Tool-call narration and raw logs.
+- A child's "done", until the parent names the evidence.
+- Invented stdout, a test result you did not see, a timeout you did not wait out.
+- `git push`, force-push, or `--tags`, unless this user message asked for push or a PR that requires it.
 
-1. **Orient** — list directory or glob the relevant area.
-2. **Find** — search by symbol, identifier, or error message.
-3. **Read** — open the specific file or function the search pointed to.
-4. **Read more** — only when the first read leaves a real question open.
+### Git
 
-Re-reading the same files repeatedly is a signal you're guessing, not investigating.
-
-## MCP and plugin tools
-
-MCP surfaces change. Treat each one as untrusted-by-default until you've inspected it.
-
-1. **Inspect the schema** before calling. Parameters, required fields, return shape.
-2. **Call with those params** — never invent argument names or shapes from memory.
-3. **Auth deliberately** — only when a call fails for auth reasons; don't preemptively re-auth.
-4. **Don't promise capabilities** that aren't in the live schema. Tool names and shapes drift across versions.
-5. **Fallback gracefully** — if the MCP isn't available or fails, fall back to official docs or honest **blocked** ([composer-verification](composer-verification.mdc)).
-
-## Browser and UI proof
-
-- Prefer an accessibility/DOM **snapshot** as the structural source of truth for what is on the page.
-- Use a **screenshot** when visual appearance is the claim (layout, styling, empty states).
-- Cite the artifact you inspected. "Looks fine in the diff" is not UI verification.
-
-## Shell usage
-
-- Prefer non-interactive flags (`-y`, `--no-input`, `CI=1`) so commands don't hang.
-- Use the project's own scripts (`package.json`, `Makefile`, `justfile`) before reinventing equivalents.
-- **Background** long-running processes; don't block the conversation on a 10-minute build.
-- Tell the user how to check background output (terminal session, subagent output path).
-- Quote paths with spaces. Don't pipe through unsafe shell substitution.
-- Never run destructive commands (`rm -rf`, `git push --force`, DB drops) without explicit confirmation.
-
-### Git commands
-
-See [composer-core](composer-core.mdc) § Git remote safety. Default: **never push unprompted**.
-
-| Allowed without extra ask | Requires explicit user ask in **this** turn |
+| Allowed without an extra ask | Requires an explicit ask in **this** turn |
 | --- | --- |
-| `git status`, `git diff`, `git log`, `git add`, `git commit` (when user asked to commit) | `git push`, `git push -u`, `git push --force`, `git push --tags` |
-| `gh pr view`, `gh pr checks`, read-only `gh` | Any command whose primary effect is updating `origin` |
+| `git status`, `git diff`, `git log`, `git add`, `git commit` when the user asked to commit | `git push`, `git push -u`, `git push --force`, `git push --tags` |
+| `gh pr view`, `gh pr checks`, read-only `gh` | Any command whose effect is updating `origin` |
 
-**Anti-pattern:** Chaining `&& git push` at the end of "fix CI" or "create PR" scripts when the user did not say push.
+Do not chain `&& git push` onto a fix or a PR script the user did not ask to push.
 
-## Background work and subagents
+## MCP
 
-- Use **background** subagents or shells when the parent can make progress elsewhere; label assumptions until results return.
-- **Stopping the parent stops child subagents** — avoid aborting mid-flight without noting impact.
-- Subagent prompts need full context (subagents don't see chat history). See orchestration rule.
-- **Don't vacuously poll** child agents or long jobs — wait for completion signals, or check only when the next step is blocked on that result.
+MCP tools, prompts, resources, and apps change ([MCP](https://cursor.com/docs/mcp)). Same run mode as the terminal: allowlisted calls run, the rest go through review.
 
-## Sandbox and network
+1. Read the live schema. Parameters, required fields, return shape.
+2. Call with those fields. Do not invent names from memory.
+3. Authenticate when a call fails for auth. Do not re-auth first.
+4. Promise only what the schema lists.
+5. If the server is missing or errors, fall back to official docs or **blocked** ([composer-verification](composer-verification.mdc)).
 
-- Prefer project scripts over ad-hoc installs when the sandbox allows.
-- If a command fails for **network or permission** limits, report **blocked** with what allowlist or credential is needed — don't retry the same failing call indefinitely.
-- Respect `sandbox.json` / org egress policy when documented.
+## Browser
 
-## Web retrieval
+Use the browser when the claim is something on a page ([browser tools](https://cursor.com/docs/agent/tools/browser)).
 
-When you need facts beyond the codebase:
+- Snapshot for structure. Screenshot for layout, styling, and empty states.
+- Console and network when the bug is a runtime or request failure.
+- Exercise the path: click, type, submit. A single screenshot is not the check.
+- Cite the artifact. An origin allowlist can block navigation; if it does, say so.
 
-- Prefer **primary** sources: official docs, RFCs, vendor pages, repo changelogs.
-- Use the current date in queries when freshness matters; flag stale pages.
-- For high-stakes claims (security, compliance, vendor behavior), corroborate with a second independent source.
-- Cite what you actually opened. Don't list links you didn't read.
+## Shell
 
-## Never fabricate tool output
+- Non-interactive flags (`-y`, `--no-input`, `CI=1`).
+- The project's own scripts (`package.json`, `Makefile`, `justfile`) before a hand-rolled equivalent.
+- Background a long build. Tell the user which terminal holds the output.
+- Quote paths with spaces.
+- Destructive commands (`rm -rf`, `git push --force`, dropping a database) wait for an explicit yes in this turn.
 
-This is the one inviolable rule of tool use.
+## Web
 
-- If a tool fails, say it failed.
-- If a tool times out, say it timed out.
-- If you ran a command and it printed nothing useful, say so.
-- Don't invent plausible-looking output to fill a gap.
-- Don't claim a test passed if you didn't see it pass.
-- Don't treat a subagent's "done" as **verified** without your own check or a verifier pass.
+Facts outside the repo come from primary sources: official docs, RFCs, changelogs, advisories. Put the current date in the query when freshness matters. For security, compliance, or vendor behavior, open a second independent source. Cite pages you opened.
 
-The user trusts that what you report happened actually happened. Breaking that trust is unrecoverable.
+## When the tools run out
 
-## When tools aren't enough
-
-If you've exhausted available tools and still don't have what you need:
-
-- State precisely what you tried.
-- State what you'd need (a credential, an environment, a file you can't see).
-- Propose the smallest unblock.
-
-Don't loop on the same failed tool call hoping for a different result.
+State what you tried, what is missing (credential, environment, file), and the smallest unblock. Then stop.
